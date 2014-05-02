@@ -1,8 +1,35 @@
 #! /usr/bin/perl
 
+# Purpose: Automatically retrieve data from BLink
+#
 # Usage: cat some_file.csv | blink_getter output_filename.csv lostgis.csv
+#
 # The input file should be a comma delimited file with two columns: a label,
 # and a gi. 
+#
+# Example:
+# $ cat input.csv
+#   a, 186509637
+#   b, 186509637
+# $ cat input.csv | blink_getter.pl out.csv lost.csv
+# $ cat out.csv
+#  label, gi, Archae, Bacteria, Metazoa, Fungi, Plants, Viruses, Other eukaryotes, nhits, nproteins, nspecies
+#  'a', 186509637,0,7,312,38,585,0,49,991,908,185
+#  'b', 186509637,0,7,312,38,585,0,49,991,908,185
+#
+# The ammount of work I have to do to get anything out of BLink is quite
+# absurd. It is downright shameful that they don't provide a means of bulk
+# downloading their data. Running this script may seem like a denial of service
+# attack from their end. Good riddance. The deserve it.
+#
+# Occasionally entries vanish, these will be collected in the lost.csv file.
+# This file can be passed through the blink_getter.pl script a second (or third) time and
+# usually the entries will then be found. If not, then BLink doesn't have the id.
+#
+# If you find a better way please contact me.
+#
+# Author: Zebulun Arendsee
+# email: arendsee@iastate.edu
 
 use strict;
 use warnings;
